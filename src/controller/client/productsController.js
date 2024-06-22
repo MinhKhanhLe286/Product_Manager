@@ -1,5 +1,8 @@
 index = (req, res) => {
-  res.send("Trang chủ products");
+  myObject = {
+    title: "Products",
+  };
+  res.render("./client/pages/products/index.pug", myObject);
 };
 
 module.exports = {
