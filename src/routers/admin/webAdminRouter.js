@@ -1,5 +1,5 @@
-const routerDashboard = require("./dashboard.router");
-const routerProduct = require("./product.router");
+const routerDashboard = require("./dashboardRouter");
+const routerProduct = require("./productRouter");
 const systemConfig = require("../../config/system");
 module.exports = (app) => {
   const PATH_ADMIN = systemConfig.prefix;

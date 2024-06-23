@@ -7,6 +7,7 @@ const app = express();
 const port = process.env.PORT;
 const hostname = process.env.HOST_NAME;
 
+const system = require("./config/system.js");
 // use mongoose connection to database
 
 const { connectMONGODB } = require("./config/database");
@@ -15,7 +16,10 @@ connectMONGODB();
 
 // config view engine và static file
 viewEngine(app);
+
 // end config view engine và static file
+// setup local Variable;
+app.locals.prefixAdmin = system.prefix;
 
 // use router clinet && admin
 clientRouter(app);

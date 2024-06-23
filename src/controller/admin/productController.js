@@ -1,4 +1,4 @@
-const productModel = require("../../model/product.model");
+const { productModel } = require("../../model/productModel");
 
 productsController = async (req, res) => {
   const products = await productModel.find({
@@ -10,4 +10,4 @@ productsController = async (req, res) => {
     products: products,
   });
 };
-module.exports = productsController;
+module.exports = { productsController };
