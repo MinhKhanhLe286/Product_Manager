@@ -1,32 +1,9 @@
 const { productModel } = require("../../model/productModel");
-
+const { filterStatusFunc } = require("../../helper/filterStatus");
 productsController = async (req, res) => {
-  const filterStatus = [
-    {
-      name: "Tất cả",
-      class: "",
-      status: "",
-    },
-    {
-      name: "Hoạt động",
-      class: "",
-      status: "active",
-    },
-    {
-      name: "Dừng hoạt động",
-      class: "",
-      status: "inactive",
-    },
-  ];
-  if (req.query.status) {
-    let index = filterStatus.findIndex((item) => {
-      return item.status == req.query.status;
-    });
-    filterStatus[index].class = "active";
-  } else {
-    filterStatus[0].class = "active";
-  }
-
+  // use Filter for helper
+  const filterStatus = filterStatusFunc(req.query);
+  // end user filter status
   let condition = {
     deleted: false,
   };
