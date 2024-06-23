@@ -33,3 +33,16 @@ if (formSearch) {
     window.location.href = newurl.href;
   });
 }
+
+// pagination
+// Pagination
+const buttonPage = document.querySelectorAll("[button-pagination]");
+if (buttonPage) {
+  let newUrl = new URL(window.location.href);
+  buttonPage.forEach((item) => {
+    item.addEventListener("click", () => {
+      newUrl.searchParams.set("page", item.getAttribute("button-pagination"));
+      window.location.href = newUrl.href; // Chuyển dòng này vào bên trong sự kiện click
+    });
+  });
+}
