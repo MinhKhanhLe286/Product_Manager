@@ -1,1 +1,1 @@
-console.log("oke");
+console.log("script clinet");

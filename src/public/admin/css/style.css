@@ -37,3 +37,11 @@
   padding: 6px 3px 4px;
   border-bottom: 1px solid #515151;
 }
+
+.card.mb-3 {
+  padding: 15px;
+}
+
+.card-boby {
+  margin-top: 15px;
+}
