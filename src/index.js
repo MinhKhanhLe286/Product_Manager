@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const viewEngine = require("./config/viewEngine");
 const clientRouter = require("./routers/client/webRouterCilent");
-
+const adminRouter = require("./routers/admin/webAdminRouter");
 const app = express();
 const port = process.env.PORT;
 const hostname = process.env.HOST_NAME;
@@ -17,9 +17,10 @@ connectMONGODB();
 viewEngine(app);
 // end config view engine và static file
 
-// use router clinet
+// use router clinet && admin
 clientRouter(app);
-// end use router clinet
+adminRouter(app);
+// end use router clinet && admin
 app.get("/xinchao", (req, res) => {
   res.render("demo.pug");
 });
