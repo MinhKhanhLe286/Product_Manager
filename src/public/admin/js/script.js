@@ -11,7 +11,25 @@ if (buttonSatatus.length > 0) {
       } else {
         newUrl.searchParams.delete("status");
       }
-      window.location.href = newUrl;
+      window.location.href = newUrl.href;
     });
+  });
+}
+
+// form seach
+const formSearch = document.querySelector("#form-search");
+if (formSearch) {
+  // chuyền lên url
+  let newurl = new URL(window.location.href);
+  formSearch.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log(e.target.elements.keyword.value);
+
+    if (e.target.elements.keyword.value) {
+      newurl.searchParams.set("keyword", e.target.elements.keyword.value);
+    } else {
+      newurl.searchParams.delete("keyword");
+    }
+    window.location.href = newurl.href;
   });
 }
