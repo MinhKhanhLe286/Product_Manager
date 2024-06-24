@@ -45,3 +45,8 @@
 .card-boby {
   margin-top: 15px;
 }
+.pagination {
+  /* flex-direction: row-reverse; */
+  /* padding-right: 10%; */
+  justify-content: center;
+}

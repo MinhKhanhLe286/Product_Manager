@@ -5,7 +5,6 @@ if (buttonSatatus.length > 0) {
   buttonSatatus.forEach((element) => {
     element.addEventListener("click", () => {
       const status = element.getAttribute("button-status");
-
       if (status) {
         newUrl.searchParams.set("status", status);
       } else {
