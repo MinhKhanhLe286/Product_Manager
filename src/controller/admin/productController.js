@@ -47,15 +47,22 @@ productsController = async (req, res) => {
   });
 };
 // [GET] /admin/products/change-status/:status/:id
-changeStatus = (req, res) => {
-  console.log(req.params);
-  const status = req.params.status;
-  const id = req.params.id;
+changeStatusFeature = async (req, res) => {
+  const status = req.params.status; // Lấy trạng thái từ params của request
+  const id = req.params.id; // Lấy id sản phẩm từ params của request
 
-  res.send(`${status} + "    " + ${id}`);
+  console.log(req.params);
+  // Cập nhật trạng thái sản phẩm trong CSDL
+  await productModel.updateOne(
+    { _id: id },
+    {
+      status: status,
+    }
+  );
+  res.redirect("back");
 };
 
 module.exports = {
   productsController,
-  changeStatus,
+  changeStatusFeature,
 };

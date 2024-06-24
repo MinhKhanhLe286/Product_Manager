@@ -1,4 +1,5 @@
 require("dotenv").config();
+const methodOverride = require("method-override");
 const express = require("express");
 const viewEngine = require("./config/viewEngine");
 const clientRouter = require("./routers/client/webRouterCilent");
@@ -13,6 +14,10 @@ const system = require("./config/system.js");
 const { connectMONGODB } = require("./config/database");
 connectMONGODB();
 // end use mongoose connection to database
+
+// config app use methodoverride
+app.use(methodOverride("_method"));
+// end code
 
 // config view engine và static file
 viewEngine(app);

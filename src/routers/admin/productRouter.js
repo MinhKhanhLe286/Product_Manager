@@ -3,10 +3,10 @@ const routerProduct = express.Router();
 
 const {
   productsController,
-  changeStatus,
+  changeStatusFeature,
 } = require("../../controller/admin/productController");
 
 routerProduct.get("/", productsController);
-routerProduct.get("/change-status/:status/:id", changeStatus);
+routerProduct.patch("/change-status/:status/:id", changeStatusFeature);
 
 module.exports = routerProduct;
