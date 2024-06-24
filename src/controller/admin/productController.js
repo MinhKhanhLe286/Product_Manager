@@ -2,6 +2,7 @@ const { productModel } = require("../../model/productModel");
 const { filterStatusFunc } = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
+// [GET] admin/products
 productsController = async (req, res) => {
   // use Filter for helper
   const filterStatus = filterStatusFunc(req.query);
@@ -24,7 +25,7 @@ productsController = async (req, res) => {
   let objectPagination = paginationHelper(
     {
       currentPage: 1,
-      limitItem: 4,
+      limitItem: 8,
     },
     req.query,
     totalDocuments
@@ -45,4 +46,16 @@ productsController = async (req, res) => {
     pagination: objectPagination,
   });
 };
-module.exports = { productsController };
+// [GET] /admin/products/change-status/:status/:id
+changeStatus = (req, res) => {
+  console.log(req.params);
+  const status = req.params.status;
+  const id = req.params.id;
+
+  res.send(`${status} + "    " + ${id}`);
+};
+
+module.exports = {
+  productsController,
+  changeStatus,
+};
