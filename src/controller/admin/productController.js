@@ -1,7 +1,7 @@
 const { productModel } = require("../../model/productModel");
 const { filterStatusFunc } = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
-
+const paginationHelper = require("../../helper/pagination");
 productsController = async (req, res) => {
   // use Filter for helper
   const filterStatus = filterStatusFunc(req.query);
@@ -20,25 +20,15 @@ productsController = async (req, res) => {
   // end search
 
   // pagination
-
-  let objectPagination = {
-    currentPage: 1,
-    limitItem: 4,
-  };
-  if (req.query.page) {
-    objectPagination.currentPage = parseInt(req.query.page);
-  }
-  console.log(">>>check pagination = " + objectPagination.currentPage);
-  objectPagination.skip =
-    (objectPagination.currentPage - 1) * objectPagination.limitItem;
-
   let totalDocuments = await productModel.countDocuments(condition);
-
-  objectPagination.totalPage = Math.ceil(
-    totalDocuments / objectPagination.limitItem
+  let objectPagination = paginationHelper(
+    {
+      currentPage: 1,
+      limitItem: 4,
+    },
+    req.query,
+    totalDocuments
   );
-
-  console.log(">>>> check doucs =", totalDocuments);
 
   // end Pagination
   // Lọc data
