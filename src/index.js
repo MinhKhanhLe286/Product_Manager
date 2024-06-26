@@ -21,7 +21,8 @@ app.use(methodOverride("_method"));
 
 // config view engine và static file
 viewEngine(app);
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // end config view engine và static file
 // setup local Variable;
 app.locals.prefixAdmin = system.prefix;

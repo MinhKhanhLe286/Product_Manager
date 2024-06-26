@@ -46,13 +46,11 @@ productsController = async (req, res) => {
     pagination: objectPagination,
   });
 };
-// [GET] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-status/:status/:id
 changeStatusFeature = async (req, res) => {
-  const status = req.params.status; // Lấy trạng thái từ params của request
-  const id = req.params.id; // Lấy id sản phẩm từ params của request
-
+  const status = req.params.status;
+  const id = req.params.id;
   console.log(req.params);
-  // Cập nhật trạng thái sản phẩm trong CSDL
   await productModel.updateOne(
     { _id: id },
     {
@@ -61,8 +59,43 @@ changeStatusFeature = async (req, res) => {
   );
   res.redirect("back");
 };
+// [PATCH] /admin/products/change-multi
+changeMultiFeater = async (req, res) => {
+  const { type, ids } = req.body;
+  let idsList = ids.split(", ");
+
+  switch (type) {
+    case "active":
+      await productModel.updateMany(
+        {
+          _id: { $in: idsList },
+        },
+        {
+          status: "active",
+        }
+      );
+      break;
+
+    case "inactive":
+      await productModel.updateMany(
+        {
+          _id: { $in: idsList },
+        },
+        {
+          status: "inactive",
+        }
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  res.redirect("back");
+};
 
 module.exports = {
   productsController,
   changeStatusFeature,
+  changeMultiFeater,
 };
