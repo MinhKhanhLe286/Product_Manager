@@ -50,7 +50,7 @@ productsController = async (req, res) => {
 changeStatusFeature = async (req, res) => {
   const status = req.params.status;
   const id = req.params.id;
-  console.log(req.params);
+
   await productModel.updateOne(
     { _id: id },
     {
@@ -93,9 +93,22 @@ changeMultiFeater = async (req, res) => {
 
   res.redirect("back");
 };
+// [DELETE] /admin/product/delete/:id
+deleteItem = async (req, res) => {
+  const id = req.params.id;
+  await productModel.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+    }
+  );
+
+  res.redirect("back");
+};
 
 module.exports = {
   productsController,
   changeStatusFeature,
   changeMultiFeater,
+  deleteItem,
 };

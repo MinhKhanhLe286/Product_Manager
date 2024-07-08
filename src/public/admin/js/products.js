@@ -75,3 +75,26 @@ if (formChangeMulti) {
   });
 }
 // end form changeMulti
+
+// Delete Item
+const buttonDelete = document.querySelectorAll("[button-delete]");
+if (buttonDelete.length > 0) {
+  const formDeleteButton = document.getElementById("form-delete-status");
+  const path = formDeleteButton.getAttribute("data-path");
+
+  buttonDelete.forEach((button) => {
+    button.addEventListener("click", () => {
+      const isConfirm = confirm("Bạn có chắc xóa sản phẩm này");
+
+      if (isConfirm) {
+        const id = button.getAttribute("data-id");
+
+        const action = `${path}/${id}?_method=DELETE`;
+
+        formDeleteButton.action = action;
+        formDeleteButton.submit();
+      }
+    });
+  });
+}
+// end delete item
