@@ -18,8 +18,17 @@ block main
     .card.mb-3 
         .card-header Sản phẩm 
         .card-boby 
-            +changeMulti(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+            .row 
+                .col-8 
+                    +changeMulti(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                .col-4 
+                    a(
+                        href=`${prefixAdmin}/products/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm mới 
+                    
             //- end form
+                .col-4
             table(
                 class="table table-hover table-sm "
                 checkbox-multi
@@ -32,6 +41,7 @@ block main
                         th Hình ảnh 
                         th Tiêu đề
                         th Giá
+                        th Vị trí
                         th Trạng thái 
                         th Hành động
                 tbody 
@@ -52,6 +62,13 @@ block main
                                 )
                             td #{item.title}
                             td #{item.price}
+                            td 
+                                input(type="number"
+                                      value=item.position 
+                                      style="width: 60px"
+                                      min= "1"
+                                      name="position"
+                                )
                             td 
                                 if(item.status == 'active')
                                     a(href ="Javascript:;"

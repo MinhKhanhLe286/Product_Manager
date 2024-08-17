@@ -1,0 +1,87 @@
+extends ../../layouts/default.pug
+
+block main 
+  h1(class="mb-4") Thêm mới sản phẩm 
+
+  form(
+    action= `${prefixAdmin}/products/create`
+    id= "form-create-product"
+    method= "POST" 
+  )
+    div(class="form-group")
+      label(for="title") Tiêu đề:
+      input(type="text"
+            class="form-control"
+            id= "title"
+            name= "title"
+            required
+        )
+
+    div(class="form-group")
+      label(for= "desc") Mô tả
+      textarea(
+          class="form-control"
+          id="desc"
+          name="description"
+          rows="5"
+        ) 
+
+    div(class="form-group")
+      label(for="price") Giá:
+      br
+      input(type="text"
+            id="price"
+            name="price"
+            value=""
+            placeholder="0"
+       )
+    
+    div(class="form-group")
+      label(for="discount") % Giảm giá
+      br
+      input(type="text"
+            id="discount"
+            name="discountPercentage"
+            value=""
+            placeholder="0"
+       )
+    div(class="form-group")
+      label(for="quantity") Số lượng:
+      br
+      input(type="text"
+            id="quantity"
+            name="stock"
+            value=""
+            placeholder="0"
+       )
+    div(class="form-group")
+      label(for="image") Ảnh:
+      br
+      input(type="text"
+            id="image"
+            name="thumbnail"
+       )
+    
+    //- Vị trí tự động tăng
+    div(class="form-group")
+      label(for="position") Vị trí: 
+      br
+      input(type="text"
+            id="position"
+            name="position"
+            placeholder = "Tự động tăng"
+            value=""
+            readonly
+       )
+
+    //- Trạng thái sản phẩm
+    div(class="form-group")
+      label(for="status") Trạng thái:
+      select(class="form-control" id="status" name="status")
+        option(value="active") Hoạt động
+        option(value="inactive") Dừng hoạt động
+
+    div(class="form-group")
+      button(type="submit" class="btn btn-primary") Thêm sản phẩm
+
+  script(src="/admin/js/product.js")

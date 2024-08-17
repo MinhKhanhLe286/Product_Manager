@@ -1,4 +1,7 @@
 const { productModel } = require("../../model/productModel");
+
+const systemConfig = require("../../config/system");
+const prefix = systemConfig.prefix;
 const { filterStatusFunc } = require("../../helper/filterStatus");
 const searchHelper = require("../../helper/search");
 const paginationHelper = require("../../helper/pagination");
@@ -35,6 +38,7 @@ productsController = async (req, res) => {
   // Lọc data
   const products = await productModel
     .find(condition)
+    .sort({ position: "desc" })
     .limit(objectPagination.limitItem)
     .skip(objectPagination.skip);
 
@@ -86,6 +90,31 @@ changeMultiFeater = async (req, res) => {
         }
       );
       break;
+    case "delete-all":
+      await productModel.updateMany(
+        {
+          _id: { $in: idsList },
+        },
+        {
+          deleted: true,
+          deleteAt: new Date(),
+        }
+      );
+      break;
+
+    case "change-position":
+      for (const item of idsList) {
+        let [id, position] = item.split("-");
+        position = parseInt(position);
+
+        await productModel.updateOne(
+          { _id: id },
+          {
+            position: position,
+          }
+        );
+      }
+      break;
 
     default:
       break;
@@ -100,15 +129,43 @@ deleteItem = async (req, res) => {
     { _id: id },
     {
       deleted: true,
+      deleteAt: new Date(),
     }
   );
 
   res.redirect("back");
 };
+// [Get] /admin/product/create
+createProduct = async (req, res) => {
+  res.render("admin/pages/products/create", {
+    pageTile: "Thêm mới sản phẩm",
+  });
+};
 
+// [POST] /admin/product/create
+
+createPost = async (req, res) => {
+  req.body.price = parseInt(req.body.price);
+  req.body.discountPercentage = parseInt(req.body.discountPercentage);
+  req.body.stock = parseInt(req.body.stock);
+  console.log(req.body);
+
+  if (req.body.position == "") {
+    const countProduct = await productModel.countDocuments();
+    req.body.position = countProduct + 1;
+  } else {
+    req.body.position = parseInt(req.body.position);
+  }
+
+  const product = new productModel(req.body);
+  await product.save();
+  res.redirect(`${prefix}/products`);
+};
 module.exports = {
   productsController,
   changeStatusFeature,
   changeMultiFeater,
   deleteItem,
+  createProduct,
+  createPost,
 };

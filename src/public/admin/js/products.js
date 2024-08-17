@@ -58,17 +58,35 @@ if (formChangeMulti) {
     const inputschecked = checkBoxMulti.querySelectorAll(
       "input[name='id']:checked"
     );
+
+    const typeChange = e.target.elements.type.value;
+    if (typeChange == "delete-all") {
+      const isConfirm = confirm("Bạn có chắc muốn xóa không");
+      if (!isConfirm) {
+        return;
+      }
+    }
+
     if (inputschecked.length > 0) {
       let ids = [];
       const inputIDs = formChangeMulti.querySelector("input[name='ids']");
       inputschecked.forEach((input) => {
         let id = input.value;
-        ids.push(id);
 
-        inputIDs.value = ids.join(", ");
+        if (typeChange == "change-position") {
+          const position = input
+            .closest("tr")
+            .querySelector("input[name='position']").value;
 
-        formChangeMulti.submit();
+          ids.push(`${id}-${position}`);
+        } else {
+          ids.push(id);
+        }
       });
+
+      inputIDs.value = ids.join(", ");
+
+      formChangeMulti.submit();
     } else {
       alert("Vui lòng chọn ít nhất 1 bản ghi");
     }
